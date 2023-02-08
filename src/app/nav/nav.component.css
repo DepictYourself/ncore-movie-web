@@ -1,0 +1,14 @@
+.nav-main {
+    background-color: #3f51b5;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-main app-nav-item {
+    margin-right: 20px;
+}
+
+app-nav-item:first-child{
+    margin-left: 20px;
+}
