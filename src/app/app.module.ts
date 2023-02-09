@@ -9,6 +9,7 @@ import { NavComponent } from './nav/nav.component';
 import { NavItemComponent } from './nav-item/nav-item.component';
 import { TorrentBrowserComponent } from './torrent-browser/torrent-browser.component';
 import { TorrentItemComponent } from './torrent-item/torrent-item.component';
+import { MovieComponent } from './movie/movie.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TorrentItemComponent } from './torrent-item/torrent-item.component';
     NavComponent,
     NavItemComponent,
     TorrentBrowserComponent,
-    TorrentItemComponent
+    TorrentItemComponent,
+    MovieComponent
   ],
   imports: [
     BrowserModule,
