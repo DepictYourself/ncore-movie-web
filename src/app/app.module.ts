@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { NavItemComponent } from './nav-item/nav-item.component';
 import { TorrentBrowserComponent } from './torrent-browser/torrent-browser.component';
+import { TorrentItemComponent } from './torrent-item/torrent-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     NavItemComponent,
-    TorrentBrowserComponent
+    TorrentBrowserComponent,
+    TorrentItemComponent
   ],
   imports: [
     BrowserModule,
