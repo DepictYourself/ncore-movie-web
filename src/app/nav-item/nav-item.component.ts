@@ -8,4 +8,7 @@ import { Component, Input } from '@angular/core';
 export class NavItemComponent {
     @Input()
     text = "";
+
+    @Input()
+    href = "";
 }
