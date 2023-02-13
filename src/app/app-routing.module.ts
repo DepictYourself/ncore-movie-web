@@ -6,7 +6,7 @@ import { TorrentBrowserComponent } from './torrent-browser/torrent-browser.compo
 const routes: Routes = [
     {path: "", component: TorrentBrowserComponent},
     {path: "torrents", component: TorrentBrowserComponent},
-    {path: "movie", component: MovieComponent}
+    {path: "movie/:imdbId", component: MovieComponent}
 ];
 
 @NgModule({
