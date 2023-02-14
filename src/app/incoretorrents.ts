@@ -10,4 +10,5 @@ export default interface iNcoreTorrent {
     coverImgUrl: string;
     imdbUrl: string;
     imdbId: string;
+    tags: string[]
 };

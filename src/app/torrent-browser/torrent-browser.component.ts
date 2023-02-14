@@ -25,7 +25,8 @@ export class TorrentBrowserComponent implements OnInit {
                     seed: element.seed,
                     coverImgUrl: element.coverImgUrl,
                     imdbUrl: element.imdbUrl,
-                    imdbId: element.imdbId
+                    imdbId: element.imdbId,
+                    tags: element.tags
                 } as iNcoreTorrent)
             });
         });
