@@ -11,7 +11,6 @@ export class TorrentItemComponent implements OnInit{
     torrent!: iNcoreTorrent;
 
     ngOnInit(): void{
-        console.log(this.torrent);
         
     }
     

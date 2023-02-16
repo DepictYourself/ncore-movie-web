@@ -3,6 +3,7 @@ import { Modal } from 'flowbite';
 import type { ModalOptions, ModalInterface } from 'flowbite';
 
 import iNcoreTorrent from '../incoretorrents';
+import ncoreMovieTags from '../../assets/ncoremovietags.json';
 
 @Component({
   selector: 'app-torrent-browser',
@@ -10,32 +11,45 @@ import iNcoreTorrent from '../incoretorrents';
   styleUrls: ['./torrent-browser.component.css']
 })
 export class TorrentBrowserComponent implements OnInit {
-    torrents: iNcoreTorrent[] = [];
+    filterTags: string[];
     modal: Modal = new Modal();
+    torrents: iNcoreTorrent[] = [];
+
+    constructor(){
+        this.filterTags = ncoreMovieTags;
+    }
 
     ngOnInit() :void {
         this.initFilterModal();
 
-        fetch("http://localhost:5000/torrents")
-        .then(res => res.json())
+        this.fetchTorrents()
         .then(data => {
-            data.forEach((element: any) => {
-                this.torrents.push({
-                    valid: element.valid,
-                    title: element.title,
-                    huTitle: element["hu-title"],
-                    category: element.category,
-                    imdbRating: element["imdb-rating"],
-                    pubDate: element.pubDate,
-                    size: element.size,
-                    seed: element.seed,
-                    coverImgUrl: element.coverImgUrl,
-                    imdbUrl: element.imdbUrl,
-                    imdbId: element.imdbId,
-                    tags: element.tags
-                } as iNcoreTorrent)
-            });
+            data.forEach((element: any) => this.torrents.push(this.getTorrent(element)));
         });
+        
+    }
+
+
+
+    fetchTorrents(){
+        return fetch("http://localhost:5000/torrents").then(res => res.json())
+    }
+
+    getTorrent(data: any){
+        return ({
+            valid: data.valid,
+            title: data.title,
+            huTitle: data["hu-title"],
+            category: data.category,
+            imdbRating: data["imdb-rating"],
+            pubDate: data.pubDate,
+            size: data.size,
+            seed: data.seed,
+            coverImgUrl: data.coverImgUrl,
+            imdbUrl: data.imdbUrl,
+            imdbId: data.imdbId,
+            tags: data.tags
+        } as iNcoreTorrent)
     }
 
 
@@ -49,13 +63,13 @@ export class TorrentBrowserComponent implements OnInit {
             backdropClasses: "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40",
             closable: true,
             onHide: () => {
-                console.log("hiding modal");
+                // console.log("hiding modal");
             },
             onShow: () => {
-                console.log("showing modal");
+                // console.log("showing modal");
             },
             onToggle: () => {
-                console.log("modal toggled");
+                // console.log("modal toggled");
             }
         }
 
@@ -65,5 +79,46 @@ export class TorrentBrowserComponent implements OnInit {
     toggleModal(): void{
         this.modal.toggle();
     }
+
+
+
+    requestFilteredMovies($event: Event) {
+        $event.preventDefault();
+        const form = $event.target;
+        const formData = new FormData(form as HTMLFormElement);
+        const queryObj = new URLSearchParams(formData as any);
+        
+        this.fetchFilterTorrents(queryObj)
+        .then(filteredTorrents => {
+            this.torrents = filteredTorrents;
+        })
+        
+        this.modal.toggle();
+    }
+
+    fetchFilterTorrents(categories: URLSearchParams){
+        const url = new URL("http://localhost:5000/torrents");
+        categories.forEach((value, key) => {
+            url.searchParams.append(key, value)
+        });
+        console.log(url.toString());
+        
+        return fetch(url.toString()).then(response => response.json());
+    }
+
+
+    resetFilter(): void{
+
+        const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+        checkboxes.forEach(el  => {
+            (el as HTMLInputElement).checked = false;
+        });
+
+        this.fetchTorrents()
+        .then(torrentsJson => this.torrents = torrentsJson);
+
+        this.modal.toggle();
+    }
+
 
 }

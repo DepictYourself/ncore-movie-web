@@ -23,7 +23,7 @@
             </button>
 
             <!-- Main modal -->
-            <form id="filterModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+            <form (submit)="requestFilteredMovies($event)" id="filterModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
                 <div class="relative w-full h-full max-w-md md:h-auto">
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
@@ -46,230 +46,30 @@
                         </div>
                         <!-- Modal body -->
                         <div class="grid grid-cols-2 gap-2 px-4 md:px-6 md:grid-cols-3">
-                            <div class="flex items-center">
-                                <input id="apple" type="checkbox" value=""
+                            <div 
+                                *ngFor="let tag of this.filterTags; let i = index"  
+                                class="flex items-center"
+                            >
+                                <input id="{{'tag-' + i}}" [name]="'tags_like'" type="checkbox" [value]="tag"
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
 
-                                <label for="apple" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Vígjáték
+                                <label for="{{'tag-' + i}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                    {{ tag }}
                                 </label>
                             </div>
 
-                            <div class="flex items-center">
-                                <input id="fitbit" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="fitbit" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Dráma
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="dell" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="dell" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Életrajz
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="asus" type="checkbox" value="" checked
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="asus" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Akció
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="logitech" type="checkbox" value="" checked
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="logitech" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Romantikus
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="msi" type="checkbox" value="" checked
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="msi" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Dokumentumfilm
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="bosch" type="checkbox" value="" checked
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="bosch" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Kaland
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="sony" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="sony" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Animáció
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="samsung" type="checkbox" value="" checked
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="samsung" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Thriller
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="canon" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="canon" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Családi
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="microsoft" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="microsoft"
-                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Bűnügyi
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="razor" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="razor" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Rövidfilm
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="emetec" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="emetec" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Musical
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="nvidia" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="nvidia" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Sci-fi
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="hp" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="hp" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Misztikus
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="benq" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="benq" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Háborús
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="rockstar" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="rockstar" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Western
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="rockstar" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="rockstar" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Horror
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="rockstar" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="rockstar" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Történelmi
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="rockstar" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="rockstar" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Sport
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="rockstar" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="rockstar" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Zene
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="rockstar" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="rockstar" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Imseretterjesztő
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="rockstar" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="rockstar" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Valóságshow
-                                </label>
-                            </div>
-
-                            <div class="flex items-center">
-                                <input id="rockstar" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-
-                                <label for="rockstar" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    3D
-                                </label>
-                            </div>
+                            
                         </div>
                         <!-- Modal footer -->
                         <div class="flex items-center p-6 space-x-4 rounded-b dark:border-gray-600">
-                            <button type="submit"
+                            <button
+                                type="submit"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
                                 Szűrés
                             </button>
-                            <button type="button"
+                            <button 
+                                (click)="resetFilter()"
+                                type="button"
                                 class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                                 Visszaállítás
                             </button>
