@@ -101,7 +101,6 @@ export class TorrentBrowserComponent implements OnInit {
         categories.forEach((value, key) => {
             url.searchParams.append(key, value)
         });
-        console.log(url.toString());
         
         return fetch(url.toString()).then(response => response.json());
     }
