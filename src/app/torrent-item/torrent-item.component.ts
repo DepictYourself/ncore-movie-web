@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import iNcoreTorrent from '../incoretorrents';
+import iNcoreTorrent from '../incoretorrent';
 
 @Component({
   selector: 'app-torrent-item',

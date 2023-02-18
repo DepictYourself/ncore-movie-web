@@ -5,10 +5,12 @@ export default interface iNcoreTorrent {
     category: string;
     imdbRating: number;
     pubDate: string;
-    seed: number;
     size: string;
+    seed: number;
     coverImgUrl: string;
     imdbUrl: string;
     imdbId: string;
-    tags: string[]
+    tags: string[];
+    downloadUrl: string;
+    torrentId: number;
 };

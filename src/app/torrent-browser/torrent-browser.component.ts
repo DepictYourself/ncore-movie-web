@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Modal } from 'flowbite';
 import type { ModalOptions, ModalInterface } from 'flowbite';
 
-import iNcoreTorrent from '../incoretorrents';
+import iNcoreTorrent from '../incoretorrent';
 import ncoreMovieTags from '../../assets/ncoremovietags.json';
 
 @Component({
@@ -48,7 +48,9 @@ export class TorrentBrowserComponent implements OnInit {
             coverImgUrl: data.coverImgUrl,
             imdbUrl: data.imdbUrl,
             imdbId: data.imdbId,
-            tags: data.tags
+            tags: data.tags,
+            downloadUrl: data.downloadUrl,
+            torrentId: data.torrentId
         } as iNcoreTorrent)
     }
 
