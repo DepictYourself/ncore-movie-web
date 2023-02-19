@@ -4,35 +4,39 @@ import type { ModalOptions, ModalInterface } from 'flowbite';
 
 import iNcoreTorrent from '../incoretorrent';
 import ncoreMovieTags from '../../assets/ncoremovietags.json';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-torrent-browser',
   templateUrl: './torrent-browser.component.html',
   styleUrls: ['./torrent-browser.component.css']
 })
+
 export class TorrentBrowserComponent implements OnInit {
     filterTags: string[];
     modal: Modal = new Modal();
     torrents: iNcoreTorrent[] = [];
 
-    constructor(){
+    constructor(private route: ActivatedRoute){
         this.filterTags = ncoreMovieTags;
     }
 
     ngOnInit() :void {
         this.initFilterModal();
 
-        this.fetchTorrents()
-        .then(data => {
-            data.forEach((element: any) => this.torrents.push(this.getTorrent(element)));
-        });
-        
+        this.fetchTorrents();
     }
 
 
 
     fetchTorrents(){
-        return fetch("http://localhost:5000/torrents").then(res => res.json())
+        fetch("http://localhost:5000/torrents")
+        .then(res => res.json())
+        .then(data => {
+            const fetchedTorrents = <iNcoreTorrent[]> [];
+            data.forEach((element: any) => fetchedTorrents.push(this.getTorrent(element)));
+            this.torrents = fetchedTorrents;
+        });
     }
 
     getTorrent(data: any){
@@ -107,19 +111,53 @@ export class TorrentBrowserComponent implements OnInit {
         return fetch(url.toString()).then(response => response.json());
     }
 
-
     resetFilter(): void{
-
         const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
         checkboxes.forEach(el  => {
             (el as HTMLInputElement).checked = false;
         });
 
-        this.fetchTorrents()
-        .then(torrentsJson => this.torrents = torrentsJson);
+        this.fetchTorrents();
 
         this.modal.toggle();
     }
+
+
+
+    requestSearchedMovies($event: Event): void {
+        $event.preventDefault();
+        const form = $event.target as HTMLFormElement;
+        const formData = new FormData(form);
+        
+        const searchString = formData.get("search") as string;
+        if(searchString === ""){
+            this.fetchTorrents();
+        }
+
+        if(searchString){
+            this.fetchSearchedTorrents(searchString as string)
+            .then(searchedTorrents => {
+                console.log(searchedTorrents);
+                
+                const transformedTorrentsArr = <iNcoreTorrent[]> [];
+                searchedTorrents.forEach((element: any) => {
+                    transformedTorrentsArr.push(this.getTorrent(element));
+                });
+                this.torrents = transformedTorrentsArr;
+            })
+        }
+        
+    }
+
+    fetchSearchedTorrents(searchText: string){
+        const url = new URL("http://localhost:5000/torrents");
+        url.searchParams.append("q", searchText)
+        console.log(url.toString());
+
+        return fetch(url.toString())
+                .then(res => res.json());
+    }
+
 
 
 }
