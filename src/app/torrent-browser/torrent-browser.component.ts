@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment.development';
+
 import { Modal } from 'flowbite';
 import type { ModalOptions, ModalInterface } from 'flowbite';
 
 import iNcoreTorrent from '../incoretorrent';
 import ncoreMovieTags from '../../assets/ncoremovietags.json';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-torrent-browser',
@@ -13,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class TorrentBrowserComponent implements OnInit {
+    ncoreApiUrl = environment.ncoreApiUrl;
     filterTags: string[];
     modal: Modal = new Modal();
     torrents: iNcoreTorrent[] = [];
@@ -30,7 +33,7 @@ export class TorrentBrowserComponent implements OnInit {
 
 
     fetchTorrents(){
-        fetch("http://localhost:5000/torrents")
+        fetch(this.ncoreApiUrl)
         .then(res => res.json())
         .then(data => {
             const fetchedTorrents = <iNcoreTorrent[]> [];
@@ -103,7 +106,7 @@ export class TorrentBrowserComponent implements OnInit {
     }
 
     fetchFilterTorrents(categories: URLSearchParams){
-        const url = new URL("http://localhost:5000/torrents");
+        const url = new URL(this.ncoreApiUrl);
         categories.forEach((value, key) => {
             url.searchParams.append(key, value)
         });
@@ -150,7 +153,7 @@ export class TorrentBrowserComponent implements OnInit {
     }
 
     fetchSearchedTorrents(searchText: string){
-        const url = new URL("http://localhost:5000/torrents");
+        const url = new URL(this.ncoreApiUrl);
         url.searchParams.append("q", searchText)
         console.log(url.toString());
 

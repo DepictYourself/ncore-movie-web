@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment.development';
 
 import languageCodes from '../../assets/languagecodes.json';
 import tmdbGenres from '../../assets/tmdbgenre.json';
@@ -10,7 +11,7 @@ import tmdbGenres from '../../assets/tmdbgenre.json';
   styleUrls: ['./movie.component.css']
 })
 export class MovieComponent implements OnInit{
-    tmdbApiUrl = "https://node-api-key-proxy-production.up.railway.app/tmdb";
+    tmdbApiUrl = environment.tmdbApiUrl;
     tmdbImgBaseUrl = "https://image.tmdb.org/t/p/";
     isDataAvailable = false;
     movie: any = {};
