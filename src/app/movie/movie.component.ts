@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 import languageCodes from '../../assets/languagecodes.json';
 import tmdbGenres from '../../assets/tmdbgenre.json';
